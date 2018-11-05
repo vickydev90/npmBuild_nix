@@ -1,6 +1,7 @@
 #!/usr/bin/groovy
-import groovy.json.JsonSlurper
 package com.jenkins.library
+
+import groovy.json.JsonSlurper
 
 def npm(runTarget, context) {
    println "context is ${context}"
