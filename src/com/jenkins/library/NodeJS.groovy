@@ -28,7 +28,7 @@ def npmNode(command, opts = null) {
         ${prefix}node ${command}"""
 }
 
-def inputFile(context) {
+def inputFile(string context) {
 def InputJSON = new JsonSlurper().parseText(context)
 return InputJSON
 }
