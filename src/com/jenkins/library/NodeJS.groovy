@@ -1,5 +1,5 @@
 #!/usr/bin/groovy
-
+package com.jenkins.library
 
 def npm(runTarget, opts = null) {
     def prefix = ""
