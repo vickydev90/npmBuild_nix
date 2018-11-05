@@ -1,0 +1,13 @@
+{
+  "application": "ob-cnf-consent-admin-cwa",
+  "distribution": {
+    "dir": "dist-release"
+  },
+  "nexus": {
+    "url": "http://localhost:8081/nexus/content/repositories/releases/",
+    "credentials": "nexusrepo"
+  },
+  "environments": {
+     "targetEnv": "qa"
+ }
+}
