@@ -2,6 +2,7 @@
 package com.jenkins.library
 
 def prefix = ${context.prefix}
+println "prefix is ${prefix}"
 def npm(runTarget, context) {
    println "context is ${context}"
    sh """#!/bin/bash -e
