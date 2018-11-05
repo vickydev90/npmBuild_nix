@@ -2,6 +2,7 @@
 package com.jenkins.library
 
 def npm(runTarget, context) {
+   println "context is ${context}"
    sh """#!/bin/bash -e
         ${context.prefix}npm ${runTarget}"""
 }
