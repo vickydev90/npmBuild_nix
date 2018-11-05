@@ -5,7 +5,7 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget, context) {
    println "context is ${context}"
-   json = definputFile(context)
+   json = def inputFile(context)
    sh """#!/bin/bash -e
         ${json.prefix}npm ${runTarget}"""
 }
