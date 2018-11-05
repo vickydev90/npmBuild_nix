@@ -6,7 +6,7 @@ import groovy.json.JsonSlurper
 def npm(runTarget, context) {
    println "context is ${context}"
    sh """#!/bin/bash -e
-        ${InputJSON.prefix}npm ${runTarget}"""
+        '${InputJSON.prefix}'npm ${runTarget}"""
 }
 
 def npmRun(runTarget, opts = null) {
