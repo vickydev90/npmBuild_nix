@@ -44,7 +44,7 @@ def getVersionFromPackageJSON() {
 
 def value() {
     dir("conf") {
-        File f = new File('config.json')
+        File f = new File('.'+File.separator+'config.json')
 	def packageJson = readJson(f.getText())
 	return packageJson.prefix
     }
