@@ -34,7 +34,7 @@ return InputJSON
 
 def value() {
     dir("conf") {
-        def packJson = readJSON file: 'config.json'
+        def packJson = inputFile file: 'config.json'
         return packJson.prefix
     }
 }
