@@ -30,7 +30,7 @@ def npmNode(command, opts = null) {
 }
 
 def inputFile(context) {
-def InputJSON = new JsonSlurper().parseText(context.text)
+def InputJSON = new JsonSlurper().parseText(context)
 return InputJSON
 }
 
