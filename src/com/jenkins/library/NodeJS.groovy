@@ -1,10 +1,11 @@
 #!/usr/bin/groovy
+import groovy.json.JsonSlurper
 package com.jenkins.library
 
 def npm(runTarget, context) {
    println "context is ${context}"
    sh """#!/bin/bash -e
-        "${context.distribution.dir}"npm ${runTarget}"""
+        ${InputJSON.prefix}npm ${runTarget}"""
 }
 
 def npmRun(runTarget, opts = null) {
@@ -23,6 +24,11 @@ def npmNode(command, opts = null) {
     }
     sh """#!/bin/bash -e
         ${prefix}node ${command}"""
+}
+
+def inputFile(context){
+def InputJSON = new JsonSlurper().parseText(inputFile.text)
+return InputJSON
 }
 
 def readJson(text) {
