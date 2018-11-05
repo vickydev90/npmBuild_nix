@@ -5,8 +5,9 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget, context) {
    println "context is ${context}"
+   json = definputFile(context)
    sh """#!/bin/bash -e
-        '${InputJSON.prefix}'npm ${runTarget}"""
+        ${json.prefix}npm ${runTarget}"""
 }
 
 def npmRun(runTarget, opts = null) {
@@ -28,7 +29,7 @@ def npmNode(command, opts = null) {
 }
 
 def inputFile(context) {
-def InputJSON = new JsonSlurper().parseText(inputFile.text)
+def InputJSON = new JsonSlurper().parseText(context.text)
 return InputJSON
 }
 
