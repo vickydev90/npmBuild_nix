@@ -4,7 +4,7 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, context) {
-   def prefixFromConfig = value.prefix()
+   def prefixFromConfig = value()
    sh """#!/bin/bash -e
         ${prefixFromConfig}npm ${runTarget}"""
 }
@@ -45,7 +45,7 @@ def getVersionFromPackageJSON() {
 def value() {
     dir("conf") {
 	def packageJson = readJSON file: 'config.json'
-	return packageJson
+	return packageJson.prefix
     }
 }
 
