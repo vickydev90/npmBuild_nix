@@ -1,13 +1,9 @@
 #!/usr/bin/groovy
 package com.jenkins.library
 
-def npm(runTarget, opts = null) {
-    def prefix = ""
-    if (opts != null) {
-        prefix = opts + " "
-    }
+def npm(runTarget, context) {
    sh """#!/bin/bash -e
-        ${prefix}npm ${runTarget}"""
+        ${context.prefix}npm ${runTarget}"""
 }
 
 def npmRun(runTarget, opts = null) {

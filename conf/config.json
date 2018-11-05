@@ -9,5 +9,6 @@
   },
   "environments": {
      "targetEnv": "qa"
- }
+ },
+ "prefix: "/usr/local/bin/"
 }
