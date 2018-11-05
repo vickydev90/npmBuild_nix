@@ -4,8 +4,7 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, context) {
-   json = this.inputFile(context)
-   prefixFromConfig = json.prefix
+   def prefixFromConfig = value.prefix()
    sh """#!/bin/bash -e
         ${prefixFromConfig}npm ${runTarget}"""
 }
@@ -28,9 +27,16 @@ def npmNode(command, opts = null) {
         ${prefix}node ${command}"""
 }
 
-def inputFile(string context) {
+def inputFile(context) {
 def InputJSON = new JsonSlurper().parseText(context)
 return InputJSON
+}
+
+def value() {
+    dir(".") {
+        def packJson = readJSON file: 'config.json'
+        return packJson
+    }
 }
 
 def readJson(text) {
