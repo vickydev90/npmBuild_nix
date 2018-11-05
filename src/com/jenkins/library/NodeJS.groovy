@@ -1,10 +1,8 @@
 #!/usr/bin/groovy
 package com.jenkins.library
 
-def prefix = ${context.prefix}
-return ${prefix}
 def npm(runTarget, context) {
-   println "context is ${context}"
+   println "context is ${context.prefix}"
    sh """#!/bin/bash -e
         ${prefix}npm ${runTarget}"""
 }
