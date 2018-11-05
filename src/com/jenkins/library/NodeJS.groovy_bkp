@@ -3,16 +3,19 @@ package com.jenkins.library
 
 import groovy.json.JsonSlurper
 
-def npm(runTarget) {
+def npm(runTarget, context) {
+   def prefixFromConfig = value()
    sh """#!/bin/bash -e
-	export PATH=/usr/local/bin:$PATH
-        npm ${runTarget}"""
+        ${prefixFromConfig}npm ${runTarget}"""
 }
 
-def npmRun(runTarget) {
+def npmRun(runTarget, opts = null) {
+    def prefix = ""
+    if (opts != null) {
+        prefix = opts + " "
+    }
     sh """#!/bin/bash -e
-	export PATH=/usr/local/bin:$PATH
-        npm run ${runTarget}"""
+        ${prefix}npm run ${runTarget}"""
 }
 
 def npmNode(command, opts = null) {
