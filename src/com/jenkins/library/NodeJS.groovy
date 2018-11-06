@@ -5,7 +5,6 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget) {
    sh """#!/bin/bash -e
-	pref = this.value().prefix
         ${pref}npm ${runTarget}"""
 }
 
@@ -46,7 +45,7 @@ def value() {
 	return InputJSON
 }
 
-def pref = value().application
+def pref = value().prefix
 println pref
 
 
