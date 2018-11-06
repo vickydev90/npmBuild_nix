@@ -10,5 +10,5 @@
   "environments": {
      "targetEnv": "qa"
  },
- "prefix": "/usr/local/bin/"
+ "prefix": "export PATH=/usr/local/bin:$PATH"
 }
