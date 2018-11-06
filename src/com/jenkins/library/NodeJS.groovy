@@ -42,7 +42,6 @@ def getVersionFromPackageJSON() {
 
 def value() {
 	def config = libraryResource 'config.json'
-    	sh 'chmod 755 /tmp/config.json'
 	writeFile file: '/tmp/config.json', text: config
 	def inputFile = new File("/tmp/config.json")
 	def InputJSON = new JsonSlurper().parseText(inputFile.text)
