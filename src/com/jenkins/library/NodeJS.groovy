@@ -40,8 +40,8 @@ def getVersionFromPackageJSON() {
 }
 
 
-def value() {
-	def inputFile = new File("conf/config.json")
+def value(config) {
+	def inputFile = new File("config")
 	def InputJSON = new JsonSlurper().parseText(inputFile.text)
 	return InputJSON
 }
