@@ -5,8 +5,8 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget) {
    sh """#!/bin/bash -e
-	export PATH=/usr/local/bin:$PATH
-        npm ${runTarget}"""
+	def pref = value().prefix
+        ${pref}npm ${runTarget}"""
 }
 
 def npmRun(runTarget) {
@@ -39,13 +39,16 @@ def getVersionFromPackageJSON() {
     }
 }
 
+
 def value() {
-    dir("conf") {
-        File f = new File('.'+File.separator+'config.json')
-	def packageJson = readJson(f.getText())
-	return packageJson.prefix
-    }
+	def inputFile = new File("config.json")
+	def InputJSON = new JsonSlurper().parseText(inputFile.text)
+	return InputJSON
 }
+
+def pref = value().application
+println pref
+
 
 def publishNexus(String targetBranch, config){
     def currentVersion = getVersionFromPackageJSON()
