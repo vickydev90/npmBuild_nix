@@ -15,15 +15,6 @@ def npmRun(runTarget) {
         npm run ${runTarget}"""
 }
 
-def npmNode(command, opts = null) {
-    def prefix = ""
-    if (opts != null) {
-        prefix = opts + " "
-    }
-    sh """#!/bin/bash -e
-        ${prefix}node ${command}"""
-}
-
 
 def readJson(text) {
     def response = new groovy.json.JsonSlurperClassic().parseText(text)
