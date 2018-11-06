@@ -41,7 +41,7 @@ def getVersionFromPackageJSON() {
 
 
 def value() {
-	def config = libraryResource 'config,json'
+	def config = libraryResource 'config.json'
     	writeFile file: '/tmp/config.json', text: config
 	def inputFile = new File("/tmp/config.json")
 	def InputJSON = new JsonSlurper().parseText(inputFile.text)
