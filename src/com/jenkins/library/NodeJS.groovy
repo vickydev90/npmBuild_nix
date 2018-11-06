@@ -41,7 +41,7 @@ def getVersionFromPackageJSON() {
 
 
 def value() {
-	def inputFile = new File("config.json")
+	def inputFile = new File("conf/config.json")
 	def InputJSON = new JsonSlurper().parseText(inputFile.text)
 	return InputJSON
 }
