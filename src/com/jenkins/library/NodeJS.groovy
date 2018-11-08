@@ -4,16 +4,16 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget) {
-   def jsonPrefix = json(configuration).prefix
+   def jsonPrefix = json(configuration)
    sh """#!/bin/bash -e
-        ${jsonPrefix}
+        ${jsonPrefix.prefix}
 	npm ${runTarget}"""
 }
 
 def npmRun(runTarget) {
-    def jsonPrefix = json(configuration).prefix	
+    def jsonPrefix = json(configuration)
     sh """#!/bin/bash -e
-	${json.prefix}
+	${jsonPrefix.prefix}
         npm run ${runTarget}"""
 }
 
