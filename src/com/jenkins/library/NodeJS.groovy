@@ -6,13 +6,13 @@ import groovy.json.JsonSlurper
 def npm(runTarget) {
    def pref = value().prefix
    sh """#!/bin/bash -e
-        ${pref}
+        ${json.prefix}
 	npm ${runTarget}"""
 }
 
 def npmRun(runTarget) {
     sh """#!/bin/bash -e
-	export PATH=/usr/local/bin:$PATH
+	${json.prefix}
         npm run ${runTarget}"""
 }
 
@@ -45,7 +45,7 @@ def json(configuration) {
 	env.WORKSPACE = pwd() + "${configuration}"
 	def jfile = readFile "${env.WORKSPACE}"
 	HashMap configFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
-	print configFile.application
+	return configFile
 }
 
 
