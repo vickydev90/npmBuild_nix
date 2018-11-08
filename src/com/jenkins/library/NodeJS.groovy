@@ -41,7 +41,7 @@ def value() {
 	return InputJSON
 }
 
-def json(runTarget, configuration) {
+def json(configuration) {
 	String parsedJson = readFile(configuration)
 	HashMap configurationFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(parsedJson))).asImmutable()
 
