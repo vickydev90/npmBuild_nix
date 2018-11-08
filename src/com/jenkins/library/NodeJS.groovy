@@ -41,8 +41,12 @@ def value() {
 	return InputJSON
 }
 
-def pref = value().prefix
-println pref
+def json(runTarget, configuration) {
+	String parsedJson = readFile(configuration)
+	HashMap configurationFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(parsedJson))).asImmutable()
+
+	println configurationFile
+}
 
 
 def publishNexus(String targetBranch, config){
