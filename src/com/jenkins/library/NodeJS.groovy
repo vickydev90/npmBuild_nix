@@ -1,14 +1,15 @@
 #!/usr/bin/groovy
 package com.jenkins.library
+import com.jenkins.library.executecommand
 
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
 		println "Executing npm " + runTarget + " ..."
 	    def pref = "npm " + runTarget
-	    def command = pref.execute()
-	    command.waitFor()
-	    command.waitForProcessOutput(System.out, System.err)
+	    new executecommand().execute(pref)
+	   // command.waitFor()
+	   // command.waitForProcessOutput(System.out, System.err)
 }
 
 def npmRun(runTarget) {
