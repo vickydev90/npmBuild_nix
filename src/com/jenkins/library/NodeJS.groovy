@@ -4,8 +4,14 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
-   sh """#!/bin/bash -e
-	npm ${runTarget}"""
+	try{
+	    def val = json(configuration)
+	    def pref = "export $PATH:"+ val.prefix
+	    pref.execute()
+	} catch (Exception ex) {
+		println "FAILED: export ${ex.message}"
+		throw ex
+	}
 }
 
 def npmRun(runTarget) {
@@ -29,20 +35,11 @@ def getVersionFromPackageJSON() {
 }
 
 
-def value() {
-	def config = libraryResource 'config.json'
-	writeFile file: '/tmp/config.json', text: config
-	sh """ chmod 755 /tmp/config.json """
-	def inputFile = new File("/tmp/config.json")
-	def InputJSON = new JsonSlurper().parseText(inputFile.text)
-	return InputJSON
-}
-
 def json(configuration) {
 	env.WORKSPACE = pwd() + configuration
 	def jfile = readFile "${env.WORKSPACE}"
 	HashMap configFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
-	println configFile.nexus.credentials
+	return configFile
 }
 
 
