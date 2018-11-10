@@ -41,7 +41,7 @@ def value() {
 }
 
 def json(configuration) {
-	env.WORKSPACE = pwd() + "${configuration}"
+	env.WORKSPACE = pwd() + "configuration"
 	def jfile = readFile "${env.WORKSPACE}"
 	HashMap configFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
 	return configFile
