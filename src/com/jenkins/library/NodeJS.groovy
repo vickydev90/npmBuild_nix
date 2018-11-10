@@ -15,10 +15,8 @@ def npm(runTarget, configuration) {
 
 def npmRun(runTarget) {
 	try{
-	    def pref = "npm run " + runTarget
-	    println "Executing npm run " + runTarget + " ..."
-	    def command = pref.execute()
-	    command.waitForOrKill( 300000 )
+	    sh """#!/bin/bash -e
+        npm run ${runTarget}"""
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
