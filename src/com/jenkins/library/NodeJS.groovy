@@ -4,9 +4,10 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
+		println "Executing npm " + runTarget + " ..."
 	    def pref = "npm " + runTarget
-	    println "Executing npm " + runTarget + " ..."
-	    Process command = pref.execute()
+	    def command = pref.execute()
+	    command.waitFor()
 	    command.waitForProcessOutput(System.out, System.err)
 }
 
