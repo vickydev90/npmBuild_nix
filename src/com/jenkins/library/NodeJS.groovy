@@ -6,6 +6,7 @@ import groovy.json.JsonSlurper
 def npm(runTarget, configuration) {
 	try{
 	    def pref = "npm " + runTarget
+	    println pref
 	    println "Executing npm " + runTarget + " ..."
 	    Process command = pref.execute()
 	    command.waitForProcessOutput(System.out, System.err)
@@ -27,13 +28,6 @@ def npmRun(runTarget) {
 	}
 }
 
-
-def readJson(text) {
-    def response = new groovy.json.JsonSlurperClassic().parseText(text)
-    jsonSlurper = null
-    echo "response:$response"
-    return response
-}
 
 def getVersionFromPackageJSON() {
     dir(".") {
