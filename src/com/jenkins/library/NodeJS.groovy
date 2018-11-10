@@ -8,7 +8,7 @@ def npm(runTarget, configuration) {
 	    def pref = "npm " + runTarget
 	    println "Executing npm " + runTarget + " ..."
 	    def command = pref.execute()
-	    command.waitForOrKill( 10000 )
+	    command.waitFor()
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
@@ -20,7 +20,7 @@ def npmRun(runTarget) {
 	    def pref = "npm run " + runTarget
 	    println "Executing npm run " + runTarget + " ..."
 	    command = pref.execute()
-	    command.waitForOrKill( 10000 )
+	    command.waitFor()
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
