@@ -7,7 +7,7 @@ def npm(runTarget, configuration) {
 	try{
 	    def val = json(configuration)
 	    def pref = 'export PATH=$PATH:'+ val.prefix
-	    pref.execute()
+	    pref.execute();
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
