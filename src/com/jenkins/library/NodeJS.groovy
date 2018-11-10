@@ -31,6 +31,12 @@ def getVersionFromPackageJSON() {
     }
 }
 
+def getVersionFromPackageJSON() {
+	env.WORKSPACE = pwd()
+	def jfile = readFile "${env.WORKSPACE}/package.json"
+	HashMap packageJson  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
+	println packageJson.version
+}
 
 def json(configuration) {
 	env.WORKSPACE = pwd() + configuration
