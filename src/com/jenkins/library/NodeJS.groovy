@@ -5,8 +5,9 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
 	try{
-	    def val = json(configuration)
-	    def pref = 'export PATH=$PATH:'+ val.prefix
+	    //def val = json(configuration)
+	    //def pref = 'export PATH=$PATH:'+ val.prefix
+	    def pref = "npm" + runTarget
 	    pref.execute();
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
