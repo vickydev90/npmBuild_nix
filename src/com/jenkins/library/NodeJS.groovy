@@ -16,8 +16,15 @@ def npm(runTarget, configuration) {
 }
 
 def npmRun(runTarget) {
-    sh """#!/bin/bash -e
-        npm run ${runTarget}"""
+	try{
+	    //def val = json(configuration)
+	    //def pref = 'export PATH=$PATH:'+ val.prefix
+	    def pref = "npm run " + runTarget
+	    pref.execute()
+	} catch (Exception ex) {
+		println "FAILED: export ${ex.message}"
+		throw ex
+	}
 }
 
 
