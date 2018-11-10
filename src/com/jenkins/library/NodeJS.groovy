@@ -24,7 +24,7 @@ def npmRun(runTarget) {
 }
 
 
-def getVersionFromPackageJSON() {
+def getoldVersionFromPackageJSON() {
     dir(".") {
         def packageJson = readJSON file: 'package.json'
         return packageJson.version
