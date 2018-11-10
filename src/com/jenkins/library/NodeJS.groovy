@@ -5,10 +5,9 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
 	try{
-	    //def val = json(configuration)
-	    //def pref = 'export PATH=$PATH:'+ val.prefix
 	    def pref = "npm " + runTarget
-	    pref.execute()
+	    def op = pref.execute()
+	    println op
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
@@ -17,10 +16,9 @@ def npm(runTarget, configuration) {
 
 def npmRun(runTarget) {
 	try{
-	    //def val = json(configuration)
-	    //def pref = 'export PATH=$PATH:'+ val.prefix
 	    def pref = "npm run " + runTarget
-	    pref.execute()
+	    def op = pref.execute()
+	    println op
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
