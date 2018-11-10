@@ -4,16 +4,10 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
-	try{
 	    def pref = "npm " + runTarget
-	    println pref
 	    println "Executing npm " + runTarget + " ..."
 	    Process command = pref.execute()
 	    command.waitForProcessOutput(System.out, System.err)
-	} catch (Exception ex) {
-		println "FAILED: export ${ex.message}"
-		throw ex
-	}
 }
 
 def npmRun(runTarget) {
