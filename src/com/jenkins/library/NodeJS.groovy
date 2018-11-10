@@ -6,8 +6,8 @@ import groovy.json.JsonSlurper
 def npm(runTarget, configuration) {
 	try{
 	    def pref = "npm " + runTarget
-	    def op = pref.execute()
-	    println op
+	    println "Executing npm " + runTarget + "..."
+	    pref.execute()
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
@@ -17,6 +17,7 @@ def npm(runTarget, configuration) {
 def npmRun(runTarget) {
 	try{
 	    def pref = "npm run " + runTarget
+	    println "Executing npm run " + runTarget + "..."
 	    def op = pref.execute()
 	    println op
 	} catch (Exception ex) {
@@ -45,7 +46,7 @@ def json(configuration) {
 	env.WORKSPACE = pwd() + configuration
 	def jfile = readFile "${env.WORKSPACE}"
 	HashMap configFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
-	return configFile
+	println "prefix value is " + configFile.prefix
 }
 
 
