@@ -8,7 +8,7 @@ def npm(runTarget, configuration) {
 	    def pref = "npm " + runTarget
 	    def command = pref.execute().text; 
 	    // command.waitFor()
-	    command.waitForProcessOutput(System.out, System.err)
+	    // command.waitForProcessOutput(System.out, System.err)
 }
 
 def npmRun(runTarget) {
