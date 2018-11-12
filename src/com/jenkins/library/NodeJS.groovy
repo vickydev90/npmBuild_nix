@@ -13,7 +13,7 @@ def npm(runTarget, configuration) {
 	    command.waitForOrKill(1000)
 	    println sout
 	    // command.waitFor()
-	    // command.waitForProcessOutput(System.out, System.err)
+	    command.waitForProcessOutput(System.out, System.err)
 }
 
 def npmRun(runTarget) {
