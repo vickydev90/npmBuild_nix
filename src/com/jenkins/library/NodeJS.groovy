@@ -6,9 +6,9 @@ import groovy.json.JsonSlurper
 def npm(runTarget, configuration) {
 		println "Executing npm " + runTarget + " ..."
 	    def pref = "npm " + runTarget
-	    def command = pref.execute().text; 
+	    def command = pref.execute()
 	    // command.waitFor()
-	    // command.waitForProcessOutput(System.out, System.err)
+	    command.waitForProcessOutput(System.out, System.err)
 }
 
 def npmRun(runTarget) {
