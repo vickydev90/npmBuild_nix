@@ -4,7 +4,7 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
-		def cmd = 'hostname'
+		def cmd = 'npm install --save-dev typescript'
 		def sout = new StringBuffer(), serr = new StringBuffer()
 		println "Executing npm " + runTarget + " ..."
 	    // def pref = "npm " + runTarget
