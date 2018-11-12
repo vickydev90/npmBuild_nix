@@ -7,7 +7,7 @@ def npm(runTarget, configuration) {
 		println "Executing npm " + runTarget + " ..."
 	    def pref = "npm " + runTarget
 	    def command = pref.execute().text; 
-	    command.waitFor()
+	    // command.waitFor()
 	    command.waitForProcessOutput(System.out, System.err)
 }
 
