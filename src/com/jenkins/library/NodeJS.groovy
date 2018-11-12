@@ -10,7 +10,7 @@ def npm(runTarget, configuration) {
 	    // def pref = "npm " + runTarget
 	    def command = cmd.execute()
 	    command.consumeProcessOutput(sout, serr)
-	    command.waitForOrKill(1000)
+	    command.waitForOrKill(10000)
 	    println sout
 	    // command.waitFor()
 	    command.waitForProcessOutput(System.out, System.err)
