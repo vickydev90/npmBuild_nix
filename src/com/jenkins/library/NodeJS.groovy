@@ -1,41 +1,37 @@
 #!/usr/bin/groovy
+
 package com.jenkins.library
 
 import groovy.json.JsonSlurper
 
 def npm(runTarget, configuration) {
-		def cmd = 'npm install --save-dev typescript'
-		def sout = new StringBuffer(), serr = new StringBuffer()
-		println "Executing npm " + runTarget + " ..."
-	    // def pref = "npm " + runTarget
-	    def command = cmd.execute()
-	    command.consumeProcessOutput(sout, serr)
-	    command.waitForOrKill(10000)
-	    println sout
-	    // command.waitFor()
-	    command.waitForProcessOutput(System.out, System.err)
-}
-
-def npmRun(runTarget) {
 	try{
-	    def pref = "npm run " + runTarget
-	    println "Executing npm run " + runTarget + " ..."
-	    def command = pref.execute()
-	    command.waitForOrKill( 300000 )
+		sh """#!/bin/bash -e
+		 npm ${runTarget}"""
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
 }
 
-
-def getVersionFromPackageJSON() {
-    dir(".") {
-        def packageJson = readJSON file: 'package.json'
-        return packageJson.version
-    }
+def npmRun(runTarget) {
+	try{
+	    sh """#!/bin/bash -e
+        npm run ${runTarget}"""
+	} catch (Exception ex) {
+		println "FAILED: export ${ex.message}"
+		throw ex
+	}
+	stash	name: 'testpackage', includes: '**'
 }
 
+
+def getVersionFromPackageJSON() {
+	env.WORKSPACE = pwd()
+	def jfile = readFile "${env.WORKSPACE}/package.json"
+	HashMap packageJson  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
+	return packageJson
+}
 
 def json(configuration) {
 	env.WORKSPACE = pwd() + configuration
@@ -45,10 +41,11 @@ def json(configuration) {
 }
 
 
-def publishNexus(String targetBranch, config){
-    def currentVersion = getVersionFromPackageJSON()
-    String nexusURL = config.nexus.url ?: 'http://invalid.url/'
-    String customCredentials = config.nexus.credentials ?: null
+
+def publishNexus(String targetBranch, String targetEnv, configuration){
+    def currentVersion = getVersionFromPackageJSON().version
+    String nexusURL = json.nexus.url ?: 'http://invalid.url/'
+    String customCredentials = json.nexus.credentials ?: null
 	try{
 		stash 	name: "artifact-${context.application}-${targetBranch}-${currentVersion}" , includes: "**"
 		archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
