@@ -23,6 +23,7 @@ def npmRun(runTarget) {
 		throw ex
 	}
 	stash	name: 'testpackage', includes: '**'
+	archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
 }
 
 
