@@ -22,8 +22,7 @@ def npmRun(runTarget) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
-	stash	name: 'testpackage', includes: '**'
-	archiveArtifacts 	artifacts: testpackage , onlyIfSuccessful: true
+	archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
 }
 
 
