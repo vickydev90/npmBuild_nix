@@ -30,7 +30,7 @@ def getVersionFromPackageJSON() {
 	env.WORKSPACE = pwd()
 	def jfile = readFile "${env.WORKSPACE}/package.json"
 	HashMap packageJson  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
-	return packageJson.version
+	return packageJson
 }
 
 def json(configuration) {
@@ -41,27 +41,6 @@ def json(configuration) {
 }
 
 
-def packHandler(String targetBranch, String targetEnv, configuration){
-	dir(".")
-    String artifact = this.artifactName(targetBranch, targetEnv, configuration)
-		try {
-			if (targetEnv == 'integration'){
-				sh 'tar -cf ${artifact} *'
-			}
-		} catch(error) {
-			echo "FAILURE: Application Build failed"
-			echo error.message
-			throw error
-		} finally{
-			step([$class: 'WsCleanup', notFailBuild: true])
-		} //TryCatchFinally
-}
-
-String artifactName(String targetBranch, String targetEnv, configuration) {
-  def context = json(configuration)
-  def currentVersion = getVersionFromPackageJSON()
-  return "${context.application}-${targetBranch}-artifact-${currentVersion}.tar.gz"
-}
 
 def publishNexus(String targetBranch, String targetEnv, configuration){
     def currentVersion = getVersionFromPackageJSON().version
