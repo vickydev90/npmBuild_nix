@@ -45,7 +45,8 @@ def json(configuration) {
 def packHandler(String targetBranch, String targetEnv, configuration) {
     String artifact = this.artifactName(targetBranch, targetEnv, configuration)
 		try {
-				sh "conf/package.sh ${artifact}"
+				sh """chmod 755 conf/package.sh
+					  conf/package.sh ${artifact}"""
 				dir('j2') {
       				stash name: "${artifact}", includes: artifact
       				archive artifact
