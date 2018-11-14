@@ -22,7 +22,8 @@ def npmRun(runTarget) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
-	archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
+	// archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
+	// this.packHandler(targetBranch, targetEnv, configuration)
 }
 
 
@@ -41,12 +42,13 @@ def json(configuration) {
 }
 
 
-def packHandler(String targetBranch, String targetEnv, configuration){
-	dir(".")
+def packHandler(String targetBranch, String targetEnv, configuration) {
     String artifact = this.artifactName(targetBranch, targetEnv, configuration)
 		try {
-			if (targetEnv == 'integration'){
-				sh 'tar -cf ${artifact} *'
+				sh "conf/package.sh ${artifact}"
+				dir('j2') {
+      				stash name: "${artifact}", includes: artifact
+      				archive artifact
 			}
 		} catch(error) {
 			echo "FAILURE: Application Build failed"
