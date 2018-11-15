@@ -41,6 +41,14 @@ def json(configuration) {
 	return configFile
 }
 
+def EnvVar(configuration) {
+        def var = this.json(configuration)
+        for (item in var) {
+               println item.value      
+          }
+
+    }
+
 
 def packHandler(String targetBranch, String targetEnv, configuration) {
     String artifact = this.artifactName(targetBranch, targetEnv, configuration)
