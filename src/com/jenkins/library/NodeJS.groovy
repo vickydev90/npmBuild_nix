@@ -43,8 +43,8 @@ def json(configuration) {
 
 def EnvVar(configuration) {
         def var = this.json(configuration)
-        for (item in var) {
-               println item.value      
+        for (item in var.npm_var) {
+               println item      
           }
 
     }
