@@ -44,7 +44,7 @@ def json(configuration) {
 def EnvVar(configuration) {
         def var = this.json(configuration)
         for (item in var.npm_var) {
-             sh """ ${var.prefix}npm set ${item} """   
+             sh """ ${var.prefix}npm set """ ${item}   
           }
 
     }
