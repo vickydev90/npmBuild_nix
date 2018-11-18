@@ -14,7 +14,7 @@ def npm(runTarget, configuration) {
 	}
 }
 
-def npmRun(runTarget, string targetBranch, configuration) {
+def npmRun(runTarget, targetBranch, configuration) {
 	def context = json(configuration)
 	try{
 	    sh """#!/bin/bash -e
