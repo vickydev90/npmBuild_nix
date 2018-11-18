@@ -23,7 +23,7 @@ def npmRun(runTarget) {
 		throw ex
 	}
 	// archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
-	// this.packHandler(targetBranch, targetEnv, configuration)
+	 this.packHandler(targetBranch, targetEnv, configuration)
 }
 
 
