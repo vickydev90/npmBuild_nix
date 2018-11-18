@@ -15,6 +15,7 @@ def npm(runTarget, configuration) {
 }
 
 def npmRun(runTarget, targetBranch, configuration) {
+	String artifact = this.artifactName(targetBranch, targetEnv, configuration)
 	def context = json(configuration)
 	try{
 	    sh """#!/bin/bash -e
