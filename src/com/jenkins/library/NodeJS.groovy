@@ -14,16 +14,22 @@ def npm(runTarget, configuration) {
 	}
 }
 
-def npmRun(runTarget) {
+def npmRun(runTarget, string targetBranch, configuration) {
+	def context = json(configuration)
 	try{
 	    sh """#!/bin/bash -e
-        npm run ${runTarget}"""
+        npm run ${runTarget}
+        chmod 755 conf/package.sh
+		conf/package.sh ${artifact}"""
+		dir('j2') {
+      stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
+      archive artifact
+      }
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
 	// archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
-	 this.packHandler(targetBranch, targetEnv, configuration)
 }
 
 
