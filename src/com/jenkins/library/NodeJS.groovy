@@ -24,7 +24,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 		conf/package.sh ${artifact}"""
 		dir('j2') {
       stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
-      archive artifact
+      archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
       }
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
