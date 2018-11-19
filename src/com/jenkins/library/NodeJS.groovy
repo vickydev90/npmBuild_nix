@@ -92,8 +92,9 @@ def publishNexus(targetBranch, targetEnv, configuration) {
         }
       }
     }
-  } catch (error) {
+  } catch (error ex) {
     echo "Failed to publish artifact to Nexus"
+    throw ex
   } finally {
   }
 }
