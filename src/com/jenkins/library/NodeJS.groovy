@@ -14,7 +14,7 @@ def npm(runTarget, configuration) {
 	}
 }
 
-def npmRun(runTarget, string targetBranch, string targetEnv, configuration) {
+def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	String artifact = this.artifactName(targetBranch, targetEnv, configuration)
 	def context = json(configuration)
 	try{
@@ -65,7 +65,7 @@ String artifactName(String targetBranch, String targetEnv, configuration) {
   return "${context.application}-${targetBranch}-artifact-${currentVersion}.tar.gz"
 }
 
-def publishNexus(String targetBranch, String targetEnv, configuration) {
+def publishNexus(targetBranch, targetEnv, configuration) {
   if (targetEnv == "integration") {
   String artifact
   def packageVersion = getVersionFromPackageJSON()
