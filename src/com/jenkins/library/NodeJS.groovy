@@ -48,32 +48,16 @@ def json(configuration) {
 	return configFile
 }
 
-def EnvVar(configuration) {
-        def var = this.json(configuration)
-        for (item in var.npm_var) {
-             sh """ ${var.prefix}npm set """ ${item}   
-          }
+//def EnvVar(configuration) {
+  //      def var = this.json(configuration)
+    //    for (item in var.npm_var) {
+      //       sh """ ${var.prefix}npm set """ ${item}   
+        //  }
 
-    }
+    //}
 
 
-def packHandler(String targetBranch, String targetEnv, configuration) {
-    String artifact = this.artifactName(targetBranch, targetEnv, configuration)
-		try {
-				sh """chmod 755 conf/package.sh
-					  conf/package.sh ${artifact}"""
-				dir('j2') {
-      				stash name: "${artifact}", includes: artifact
-      				archive artifact
-			}
-		} catch(error) {
-			echo "FAILURE: Application Build failed"
-			echo error.message
-			throw error
-		} finally{
-			step([$class: 'WsCleanup', notFailBuild: true])
-		} //TryCatchFinally
-}
+
 
 String artifactName(String targetBranch, String targetEnv, configuration) {
   def context = json(configuration)
@@ -81,20 +65,38 @@ String artifactName(String targetBranch, String targetEnv, configuration) {
   return "${context.application}-${targetBranch}-artifact-${currentVersion}.tar.gz"
 }
 
-def publishNexus(String targetBranch, String targetEnv, configuration){
-    def currentVersion = getVersionFromPackageJSON().version
-    String nexusURL = json.nexus.url ?: 'http://invalid.url/'
-    String customCredentials = json.nexus.credentials ?: null
-	try{
-		stash 	name: "artifact-${context.application}-${targetBranch}-${currentVersion}" , includes: "**"
-		archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
-		echo "PUBLISH: ${this.name()} artifact  to ${nexusURL} "
-		nexusPublisher {
-					targetURL = nexusURL
-					tarball = this.name()
-				}
-		} catch (error) {
- 			echo "Failed to publish artifact to Nexus"
- 		}
+def publishNexus(String targetBranch, String targetEnv, configuration) {
+  if (targetEnv == "integration") {
+  String artifact
+  def packageVersion = getVersionFromPackageJSON()
+  def context = json(configuration)
+  echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
+  try {
+    dir('j2') {
+      deleteDir()
+      unstash "artifact-${context.application}-${targetBranch}"
+      artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
+      nexusArtifactUploader {
+      	credentialsId: ''
+    	groupId: 'content.repositories'
+    	nexusUrl: 'localhost:8081/nexus'
+    	nexusVersion: 'nexus2'
+    	protocol: 'http'
+    	repository: 'Releases'
+    	version: '2.4'
+    	artifact {
+            artifactId('releases')
+            type('*.tar.gz')
+            classifier('debug')
+            file('*.tar.gz')
+        }
+      }
+    }
+  } catch (error) {
+    echo "Failed to publish artifact to Nexus"
+  } finally {
+  }
 }
+}
+
 return this;
