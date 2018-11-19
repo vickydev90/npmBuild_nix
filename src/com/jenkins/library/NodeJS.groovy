@@ -68,6 +68,7 @@ String artifactName(String targetBranch, String targetEnv, configuration) {
 def publishNexus(targetBranch, targetEnv, configuration) {
   if (targetEnv == "integration") {
   String artifact = this.artifactName(targetBranch, targetEnv, configuration)
+  def cred = withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
   def context = json(configuration)
   //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
@@ -76,15 +77,14 @@ def publishNexus(targetBranch, targetEnv, configuration) {
       deleteDir()
       unstash "artifact-${context.application}-${targetBranch}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      def cred = withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
       nexusArtifactUploader artifacts: [[artifactId: 'test1', classifier: '', file: artifact, type: 'tar.gz']], credentialsId: cred, groupId: 'com.llyodsbanking.nodejs', nexusUrl: 'localhost:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: '2.4'
-        }
         }
   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	} finally {
   }
+}
 }
 }
 
