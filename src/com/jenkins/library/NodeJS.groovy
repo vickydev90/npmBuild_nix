@@ -77,7 +77,7 @@ def publishNexus(targetBranch, targetEnv, configuration) {
       deleteDir()
       unstash "artifact-${context.application}-${targetBranch}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      nexusArtifactUploader artifacts: [[artifactId: 'test1', classifier: '', file: artifact, type: 'tar.gz']], credentialsId: nexusLocal, groupId: 'com.llyodsbanking.nodejs', nexusUrl: 'localhost:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: '2.4'
+      nexusArtifactUploader artifacts: [[artifactId: 'test1', classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: 'localhost:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: '2.4'
         }
   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
