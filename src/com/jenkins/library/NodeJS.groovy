@@ -14,7 +14,7 @@ def npm(runTarget, configuration) {
 	}
 }
 
-def npmRun(runTarget, targetBranch, targetEnv, configuration) {
+def npmRun(runTarget, string targetBranch, string targetEnv, configuration) {
 	String artifact = this.artifactName(targetBranch, targetEnv, configuration)
 	def context = json(configuration)
 	try{
