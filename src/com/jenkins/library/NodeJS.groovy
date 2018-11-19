@@ -70,7 +70,7 @@ def publishNexus(targetBranch, targetEnv, configuration) {
   String artifact
   def packageVersion = getVersionFromPackageJSON()
   def context = json(configuration)
-  echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
+  //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
   try {
     dir('j2') {
       deleteDir()
