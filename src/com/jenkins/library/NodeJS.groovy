@@ -25,7 +25,8 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
-	  sh(copyGlobalLibraryScript('package.sh'))
+	  def script = copyGlobalLibraryScript()
+	  sh(script('package.sh'))
 	  dir('j2') {
       stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
       archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
