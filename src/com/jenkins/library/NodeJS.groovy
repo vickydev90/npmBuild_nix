@@ -26,7 +26,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 		throw ex
 	}
 	  writeFile file: '/tmp/package.sh', text: libraryResource('package.sh')
-	  File pack = "/tmp/package.sh"
+	  def pack = "/tmp/package.sh"
 	  pack.setExecutable(true, false)
 	  sh(returnStdout: true, script: pack)
 	  dir('j2') {
