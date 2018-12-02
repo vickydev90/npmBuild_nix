@@ -35,9 +35,9 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 
 String copyGlobalLibraryScript() {
   writeFile file: '/tmp/package.sh', text: libraryResource('package.sh')
+  println copyGlobalLibraryScript()
 }
 
-println copyGlobalLibraryScript()
 
 def getVersionFromPackageJSON() {
 	env.WORKSPACE = pwd()
