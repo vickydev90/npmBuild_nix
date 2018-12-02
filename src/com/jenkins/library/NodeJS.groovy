@@ -28,7 +28,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	  writeFile file: '/tmp/package.sh', text: libraryResource('package.sh')
 	  def pack = "chmod +x /tmp/package.sh"
 	  sh(returnStdout: true, script: pack)
-	  sh '/tmp/package.sh ${artifact}'
+	  sh '''/tmp/package.sh ${artifact}'''
 	  dir('j2') {
       stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
       archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
