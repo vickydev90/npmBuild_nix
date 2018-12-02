@@ -34,7 +34,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 }
 
 String copyGlobalLibraryScript() {
-  writeFile file: '/tmp/package.sh', text: libraryResource(package.sh)
+  writeFile file: '/tmp/package.sh', text: libraryResource('package.sh')
 }
 
 
