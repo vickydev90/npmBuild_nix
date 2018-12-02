@@ -20,17 +20,20 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	try{
 	    sh """#!/bin/bash -e
         npm run ${runTarget}
-        chmod 755 conf/package.sh
-		conf/package.sh ${artifact}"""
-		dir('j2') {
-      stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
-      archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
-      }
+        
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
-	// archiveArtifacts 	artifacts: '**'   , onlyIfSuccessful: true
+	  sh(copyGlobalLibraryScript('package.sh'))
+	  dir('j2') {
+      stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
+      archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
+      }
+}
+
+String copyGlobalLibraryScript() {
+  writeFile file: '/tmp/package.sh', text: libraryResource(package.sh)
 }
 
 
@@ -77,7 +80,7 @@ def publishNexus(targetBranch, targetEnv, configuration) {
       deleteDir()
       unstash "artifact-${context.application}-${targetBranch}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      nexusArtifactUploader artifacts: [[artifactId: 'test1', classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: 'localhost:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: '2.4'
+      nexusArtifactUploader artifacts: [[artifactId: ${context.application}, classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: ${context.nexus.url}, nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: 'packageVersion'
         }
   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
