@@ -30,7 +30,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	  sh(returnStdout: true, args: artifact, script: pack)
 	  dir('j2') {
       stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
-      archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
+      archiveArtifacts 	artifacts: ${artifact}, onlyIfSuccessful: true
       }
 }
 
