@@ -19,9 +19,9 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	def context = json(configuration)
 	try{
 	    sh """#!/bin/bash -e
-        npm run ${runTarget}
+        npm run ${runTarget}"""
         
-	} catch (Exception ex) {
+	   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
@@ -86,9 +86,7 @@ def publishNexus(targetBranch, targetEnv, configuration) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	} finally {
+  		}
+  	}
+  	}
   }
-}
-}
-}
-
-return this;
