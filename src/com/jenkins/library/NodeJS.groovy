@@ -37,6 +37,7 @@ String copyGlobalLibraryScript() {
   writeFile file: '/tmp/package.sh', text: libraryResource('package.sh')
 }
 
+println copyGlobalLibraryScript()
 
 def getVersionFromPackageJSON() {
 	env.WORKSPACE = pwd()
