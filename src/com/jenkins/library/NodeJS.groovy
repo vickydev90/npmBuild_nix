@@ -6,7 +6,7 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget) {
 	try{
-		//runfunction()
+		runfunction()
 		sh """#!/bin/bash -e
 		npm ${runTarget}"""
 	} catch (Exception ex) {
