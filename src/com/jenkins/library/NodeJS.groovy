@@ -8,7 +8,7 @@ def npm(runTarget) {
 	try{
 		runfunction()
 		sh """#!/bin/bash -e
-		 npm ${runTarget}"""
+		/usr/local/bin/npm ${runTarget}"""
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
