@@ -25,8 +25,3 @@ npm set tmp='~/tmp'
 
 npm config set strict-ssl false
 npm config set chromedriver_cdnurl https://nexus.sandbox.extranet.group/nexus/content/sites/binaries/chromedriver
-
-export CC=/apps/tools/devtoolset-1.1/root/usr/bin/gcc
-export CPP=/apps/tools/devtoolset-1.1/root/usr/bin/cpp
-export CXX=/apps/tools/devtoolset-1.1/root/usr/bin/c++
-export NVM_NODEJS_ORG_MIRROR=http://nexus.sandbox.extranet.group/nexus/content/sites/binaries/node
