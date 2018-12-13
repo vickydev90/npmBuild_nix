@@ -6,9 +6,9 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget) {
 	try{
-		runfunction()
+		//runfunction()
 		sh """#!/bin/bash -e
-		/usr/local/bin/npm ${runTarget}"""
+		npm ${runTarget}"""
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
