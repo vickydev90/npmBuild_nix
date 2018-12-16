@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 
-@Library('workflow_gt@master')
+@Library('workflow_gt')
 import com.jenkins.library.*
 
 import com.jenkins.library
