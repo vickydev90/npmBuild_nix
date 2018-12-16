@@ -70,7 +70,7 @@ String artifactName(String targetBranch, String targetEnv, configuration) {
             
 
 def publishNexus(targetBranch, targetEnv, configuration) {
-  if (targetEnv == "integration") {
+  if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(targetBranch, targetEnv, configuration)
   withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
