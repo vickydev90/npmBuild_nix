@@ -54,15 +54,8 @@ def getVersionFromPackageJSON() {
 	return packageJson.version
 }
 
-def json(configuration) {
-	env.WORKSPACE = pwd() + configuration
-	def jfile = readFile "${env.WORKSPACE}"
-	HashMap configFile  = (new HashMap(new groovy.json.JsonSlurperClassic().parseText(jfile))).asImmutable()
-	return configFile
-}
-
 def config() {
-	String configPath = "${env.WORKSPACE}/pipelines/conf/Nodejs-build.yaml"
+	String configPath = "${env.WORKSPACE}/pipelines/conf/build-nodejs.yaml"
 	Map configFile  = readYaml file: configPath
 	return configFile
 }
