@@ -17,9 +17,9 @@ def npm(runTarget) {
 	}
 }
 
-def npmRun(runTarget, targetBranch, targetEnv, configuration) {
-	String artifact = this.artifactName(targetBranch, targetEnv, configuration)
-	def context = json(configuration)
+def npmRun(runTarget, targetEnv) {
+	String artifact = this.artifactName(String targetEnv)
+	def context = config()
 	try{
 	 	runfunction()
 	    sh """#!/bin/bash -e
@@ -34,7 +34,7 @@ def npmRun(runTarget, targetBranch, targetEnv, configuration) {
 	  sh(returnStdout: true, script: pack)
 	  sh """/tmp/package.sh ${artifact}"""
 	  dir('j2') {
-      stash name: "artifact-${context.application}-${targetBranch}", includes: artifact
+      stash name: "artifact-${context.application}-${targetEnv}", includes: artifact
       archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
       }
 }
@@ -61,20 +61,25 @@ def json(configuration) {
 	return configFile
 }
 
+def config() {
+	String configPath = "${env.WORKSPACE}/pipelines/conf/Nodejs-build.yaml"
+	Map configFile  = readYaml file: configPath
+	return configFile
+}
 
-String artifactName(String targetBranch, String targetEnv, configuration) {
-  def context = json(configuration)
+String artifactName(String targetEnv) {
+  def context = config()
   def currentVersion = getVersionFromPackageJSON()
-  return "${context.application}-${targetBranch}-artifact-${currentVersion}.tar.gz"
+  return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
 }
             
 
-def publishNexus(targetBranch, targetEnv, configuration) {
+def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
-  String artifact = this.artifactName(targetBranch, targetEnv, configuration)
+  String artifact = this.artifactName(String targetEnv)
   withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
-  def context = json(configuration)
+  def context = config()
   //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
   try {
     dir('j2') {
