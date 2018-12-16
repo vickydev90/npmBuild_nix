@@ -1,6 +1,9 @@
 #!/usr/bin/groovy
 
-package com.jenkins.library
+@Library('workflow_gt@master')
+import com.jenkins.library.*
+
+import com.jenkins.library
 
 import groovy.json.JsonSlurper
 
@@ -65,6 +68,15 @@ String artifactName(String targetBranch, String targetEnv, configuration) {
   def currentVersion = getVersionFromPackageJSON()
   return "${context.application}-${targetBranch}-artifact-${currentVersion}.tar.gz"
 }
+
+def branchname() {
+       echo "Checking git workflow"
+       String gitWorkFlow = gitWorkFlowTypeByBranchRule()
+       echo "gitWorkFlow: ${gitWorkFlow}"
+       return  gitWorkFlow
+    }
+
+            
 
 def publishNexus(targetBranch, targetEnv, configuration) {
   if (targetEnv == "integration") {
