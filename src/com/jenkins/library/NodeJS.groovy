@@ -1,24 +1,31 @@
 #!/usr/bin/groovy
+
 package com.jenkins.library
 
-import com.jenkins.library.ExecuteCommand
 import groovy.json.JsonSlurper
 
+
+
 def npm(runTarget) {
-		println "Executing npm " + runTarget + " ..."
-	    def command = "npm " + runTarget
-	    new ExecuteCommand().execute(command) 
+	try{
+		runfunction()
+		sh """#!/bin/bash -e
+		npm ${runTarget}"""
+	} catch (Exception ex) {
+		println "FAILED: export ${ex.message}"
+		throw ex
+	}
 }
 
 def npmRun(runTarget, targetEnv) {
-    String artifact = this.artifactName(targetEnv)
+	String artifact = this.artifactName(targetEnv)
 	def context = config()
 	try{
-	    def command = "npm run " + runTarget
-	    println "Executing npm run " + runTarget + " ..."
-	    new ExecuteCommand().execute(command)
-	    
-	} catch (Exception ex) {
+	 	runfunction()
+	    sh """#!/bin/bash -e
+        npm run ${runTarget}"""
+        
+	   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	}
@@ -58,22 +65,27 @@ String artifactName(String targetEnv) {
   def currentVersion = getVersionFromPackageJSON()
   return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
 }
+            
 
-
-def publishNexus(String targetBranch, config){
-    def currentVersion = getVersionFromPackageJSON()
-    String nexusURL = config.nexus.url ?: 'http://invalid.url/'
-    String customCredentials = config.nexus.credentials ?: null
-	try{
-		stash 	name: "artifact-${context.application}-${targetBranch}-${currentVersion}" , includes: "**"
-		archiveArtifacts 	artifacts: artifact, onlyIfSuccessful: true
-		echo "PUBLISH: ${this.name()} artifact  to ${nexusURL} "
-		nexusPublisher {
-					targetURL = nexusURL
-					tarball = this.name()
-				}
-		} catch (error) {
- 			echo "Failed to publish artifact to Nexus"
- 		}
-}
-return this;
+def publishNexus(targetEnv) {
+  if (targetEnv == "integration-branch") {
+  String artifact = this.artifactName(String env)
+  withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
+  def packageVersion = getVersionFromPackageJSON()
+  def context = config()
+  //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
+  try {
+    dir('j2') {
+      deleteDir()
+      unstash "artifact-${context.application}-${targetBranch}"
+      artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
+      nexusArtifactUploader artifacts: [[artifactId: ${context.application}, classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: ${context.nexus.url}, nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: 'packageVersion'
+        }
+  } catch (Exception ex) {
+		println "FAILED: export ${ex.message}"
+		throw ex
+	} finally {
+  		}
+  	}
+  	}
+  }
