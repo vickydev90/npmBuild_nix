@@ -18,7 +18,7 @@ def npm(runTarget) {
 }
 
 def npmRun(runTarget, targetEnv) {
-	String artifact = this.artifactName(String env)
+	String artifact = this.artifactName(String targetEnv)
 	def context = config()
 	try{
 	 	runfunction()
@@ -67,7 +67,7 @@ def config() {
 	return configFile
 }
 
-String artifactName(String env) {
+String artifactName(String targetEnv) {
   def context = config()
   def currentVersion = getVersionFromPackageJSON()
   return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
