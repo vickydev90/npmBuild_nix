@@ -18,7 +18,7 @@ def npm(runTarget) {
 }
 
 def npmRun(runTarget, targetEnv) {
-	String artifact = this.artifactName(String targetEnv)
+	String artifact = this.artifactName(targetEnv)
 	def context = config()
 	try{
 	 	runfunction()
