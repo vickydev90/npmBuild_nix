@@ -6,17 +6,17 @@ import groovy.json.JsonSlurper
 
 def npm(runTarget) {
 		println "Executing npm " + runTarget + " ..."
-	    def pref = "npm " + runTarget
-	    new ExecuteCommand().execute(pref) 
+	    def command = "npm " + runTarget
+	    new ExecuteCommand().execute(command) 
 }
 
 def npmRun(runTarget, targetEnv) {
     String artifact = this.artifactName(targetEnv)
 	def context = config()
 	try{
-	    def pref = "npm run " + runTarget
+	    def command = "npm run " + runTarget
 	    println "Executing npm run " + runTarget + " ..."
-	    new ExecuteCommand().execute(pref)
+	    new ExecuteCommand().execute(command)
 	    
 	} catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
