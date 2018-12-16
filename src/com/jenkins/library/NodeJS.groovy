@@ -4,8 +4,6 @@ package com.jenkins.library
 
 import groovy.json.JsonSlurper
 
-@Library('workflow_gt')
-import com.jenkins.library.*
 
 
 def npm(runTarget) {
