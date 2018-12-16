@@ -1,11 +1,12 @@
 #!/usr/bin/groovy
 
+package com.jenkins.library
+
+import groovy.json.JsonSlurper
+
 @Library('workflow_gt')
 import com.jenkins.library.*
 
-import com.jenkins.library
-
-import groovy.json.JsonSlurper
 
 def npm(runTarget) {
 	try{
