@@ -65,7 +65,12 @@ String artifactName(String targetEnv) {
   def currentVersion = getVersionFromPackageJSON()
   return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
 }
-            
+
+def workfl() {
+	String gitWorkFlow = gitWorkFlowTypeByBranchRule()
+    echo "gitWorkFlow: ${gitWorkFlow}"
+    println workfl
+    }
 
 def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
