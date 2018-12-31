@@ -66,15 +66,11 @@ String artifactName(String targetEnv) {
   return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
 }
 
-def workfl() {
-	String gitWorkFlow = gitWorkFlowTypeByBranchRule()
-    echo "gitWorkFlow: ${gitWorkFlow}"
-    return workfl
-    }
 
 def publishNexus(targetEnv) {
-  branch = workfl()
-  if (branch == "integration-branch") {
+  def workfl = workflow_gt.gitWorkFlowTypeByBranchRule()
+  echo "WorkFlow: ${workfl}"
+  if (workfl == "integration-branch") {
   String artifact = this.artifactName(String env)
   withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
