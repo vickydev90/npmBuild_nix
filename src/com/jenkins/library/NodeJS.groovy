@@ -68,9 +68,7 @@ String artifactName(String targetEnv) {
 
 
 def publishNexus(targetEnv) {
-  def workfl = workflow_gt.gitWorkFlowTypeByBranchRule()
-  echo "WorkFlow: ${workfl}"
-  if (workfl == "integration-branch") {
+  if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(String env)
   withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
