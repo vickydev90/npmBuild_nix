@@ -85,6 +85,7 @@ def publishNexus(targetEnv) {
 		println "FAILED: export ${ex.message}"
 		throw ex
 	} finally {
+		step([$class: 'WsCleanup', notFailBuild: true])
   		}
   	}
   	}
