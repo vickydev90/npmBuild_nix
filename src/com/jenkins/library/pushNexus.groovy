@@ -1,3 +1,4 @@
+package com.jenkins.library
 import com.jenkins.library.NodeJS
 
 def call(Closure body) {

@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 
 package com.jenkins.library
-import com.jenkins.library.*
+import com.jenkins.library.pushNexus
 import groovy.json.JsonSlurper
 
 
