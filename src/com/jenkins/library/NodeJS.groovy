@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 
 package com.jenkins.library
-
+import com.jenkins.library.pushNexus
 import groovy.json.JsonSlurper
 
 
@@ -70,7 +70,7 @@ String artifactName(String targetEnv) {
 def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(String env)
-  withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
+  //withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
   def context = config()
   //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
@@ -79,7 +79,11 @@ def publishNexus(targetEnv) {
       deleteDir()
       unstash "artifact-${context.application}-${targetBranch}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      nexusArtifactUploader artifacts: [[artifactId: ${context.application}, classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: ${context.nexus.url}, nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: 'packageVersion'
+      pushNexus {
+          targetURL = ${context.nexus.url}
+          tarfile = artifact
+      }
+
         }
   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
@@ -87,6 +91,5 @@ def publishNexus(targetEnv) {
 	} finally {
 		step([$class: 'WsCleanup', notFailBuild: true])
   		}
-  	}
   	}
   }
