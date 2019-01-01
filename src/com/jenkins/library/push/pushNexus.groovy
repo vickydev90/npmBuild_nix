@@ -1,4 +1,4 @@
-package com.jenkins.library
+package com.jenkins.library.push
 
 
 def call(Closure body) {

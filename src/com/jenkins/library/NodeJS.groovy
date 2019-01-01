@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 
 package com.jenkins.library
-import com.jenkins.library.pushNexus
+import com.jenkins.library.push.pushNexus
 import groovy.json.JsonSlurper
 
 
@@ -73,7 +73,6 @@ def publishNexus(targetEnv) {
   //withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
   def context = config()
-  //echo "PUBLISH: ${this.name()} artifact version: ${packageVersion} "
   try {
     dir('j2') {
       deleteDir()
