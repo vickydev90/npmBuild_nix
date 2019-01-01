@@ -1,5 +1,5 @@
 package com.jenkins.library
-import com.jenkins.library.push.*
+import com.jenkins.library.push.pushNexus
 import groovy.json.JsonSlurper
 
 
