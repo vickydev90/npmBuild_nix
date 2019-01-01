@@ -68,7 +68,7 @@ String artifactName(String targetEnv) {
 def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(String env)
-  //withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
+  withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
   def context = config()
   try {
@@ -76,10 +76,17 @@ def publishNexus(targetEnv) {
       deleteDir()
       unstash "artifact-${context.application}-${targetEnv}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      pushNexus {
-          targetURL = ${context.nexus.url}
-          tarfile = artifact
-      }
+      nexusArtifactUploader artifactId: 'testsnap',
+        classifier: '',
+        credentialsId: 'nexusLocal',
+        file: artifact,
+        groupId: 'content.repositories.central',
+        nexusUrl: 'dev-p76-app-16.sandbox.local:8081/nexus',
+        nexusVersion: 'nexus2',
+        protocol: 'http',
+        repository: 'Nodesnap',
+        type: 'tar.gz',
+        version: packageVersion
 
         }
   } catch (Exception ex) {
@@ -89,4 +96,5 @@ def publishNexus(targetEnv) {
 		step([$class: 'WsCleanup', notFailBuild: true])
   		}
   	}
+  }
   }
