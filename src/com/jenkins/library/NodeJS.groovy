@@ -76,7 +76,8 @@ def publishNexus(targetEnv) {
       deleteDir()
       unstash "artifact-${context.application}-${targetEnv}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      pushNexus {
+      def nexusObject = new pushNexus()
+      nexusObject.call() {
           targetURL = ${context.nexus.url}
           tarfile = artifact
       }
