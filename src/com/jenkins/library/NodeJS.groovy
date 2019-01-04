@@ -68,7 +68,7 @@ String artifactName(String targetEnv) {
 def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(String env)
-  withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
+  //withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def packageVersion = getVersionFromPackageJSON()
   def context = config()
   try {
@@ -76,7 +76,10 @@ def publishNexus(targetEnv) {
       deleteDir()
       unstash "artifact-${context.application}-${targetEnv}"
       artifact = sh(returnStdout: true, script: 'ls *.tar.gz | head -1').trim()
-      nexusArtifactUploader artifacts: [[artifactId: artifact, classifier: '', file: artifact, type: 'tar.gz']], credentialsId: 'nexusLocal', groupId: 'com.llyodsbanking.nodejs', nexusUrl: {context.nexus.url}, nexusVersion: 'nexus2', protocol: 'http', repository: 'releases', version: 'packageVersion'
+      pushNexus {
+          targetURL = ${context.nexus.url}
+          tarfile = artifact
+      }
         }
   } catch (Exception ex) {
 		println "FAILED: export ${ex.message}"
@@ -85,5 +88,4 @@ def publishNexus(targetEnv) {
 		step([$class: 'WsCleanup', notFailBuild: true])
   		}
   	}
-  }
   }
