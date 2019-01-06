@@ -3,7 +3,7 @@ package com.jenkins.library.push
 
 def call(Closure body) {
  
-   //def context = config()
+   def context = config()
  
    body.resolveStrategy = Closure.DELEGATE_FIRST
    body.delegate = context
