@@ -68,11 +68,12 @@ String artifactName(String targetEnv) {
 def publishNexus(targetEnv) {
   if (targetEnv == "integration-branch") {
   String artifact = this.artifactName(String env)
+  def context = config()
   //withCredentials([usernamePassword(credentialsId: 'nexusLocal', passwordVariable: 'pass', usernameVariable: 'test')]){
   def nexusURL = context.nexus.url
   def credentialsID = context.nexus.credentials
   def packageVersion = getVersionFromPackageJSON()
-  def context = config()
+  
   try {
     dir('j2') {
       deleteDir()
