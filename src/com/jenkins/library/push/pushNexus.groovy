@@ -1,5 +1,10 @@
 package com.jenkins.library.push
 
+def config() {
+	String configPath = "${env.WORKSPACE}/pipelines/conf/build-nodejs.yaml"
+	Map configFile  = readYaml file: configPath
+	return configFile
+}
 
 def call(Closure body) {
  
