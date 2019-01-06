@@ -15,7 +15,7 @@ def call(Closure body) {
    body()
  
    def nexusURL = context.nexus.url
-   def artifact = tarfile
+   def artifact = artifact
    def credentialsID = context.nexus.credentials
  
    withCredentials([
