@@ -3,13 +3,7 @@ package com.jenkins.library.push
 
 def call(Closure body) {
  
-   def config() {
-	String configPath = "${env.WORKSPACE}/pipelines/conf/build-nodejs.yaml"
-	Map configFile  = readYaml file: configPath
-	return configFile
-}
- 
-   def context = config()
+   //def context = config()
  
    body.resolveStrategy = Closure.DELEGATE_FIRST
    body.delegate = context
