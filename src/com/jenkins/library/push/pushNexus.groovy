@@ -21,7 +21,7 @@ def call(Closure body) {
    body()
  
    def nexusURL = context.nexus.url
-   def artifact = artifactName
+   def artifact = this.artifactName(String env)
    def credentialsID = context.nexus.credentials
  
    withCredentials([
