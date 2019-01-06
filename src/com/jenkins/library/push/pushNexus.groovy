@@ -14,9 +14,9 @@ def call(Closure body) {
    body.delegate = context
    body()
  
-   def nexusURL = context.targetURL
-   def artifact = context.tarball
-   def credentialsID = 'nexus-uploader'
+   def nexusURL = targetURL
+   def artifact = tarfile
+   def credentialsID = cred
  
    withCredentials([
        usernameColonPassword(    credentialsId: credentialsID,

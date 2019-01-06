@@ -80,6 +80,7 @@ def publishNexus(targetEnv) {
       nexusObject.call {
           targetURL = {context.nexus.url}
           tarfile = artifact
+          cred = {context.nexus.credentials}
       }
         }
   } catch (Exception ex) {
