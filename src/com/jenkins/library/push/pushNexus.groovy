@@ -6,6 +6,12 @@ def config() {
 	return configFile
 }
 
+String artifactName(String targetEnv) {
+  def context = config()
+  def currentVersion = getVersionFromPackageJSON()
+  return "${context.application}-${targetEnv}-artifact-${currentVersion}.tar.gz"
+}
+
 def call(Closure body) {
  
    def context = config()
@@ -15,7 +21,7 @@ def call(Closure body) {
    body()
  
    def nexusURL = context.nexus.url
-   def artifact = artifact
+   def artifact = artifactName
    def credentialsID = context.nexus.credentials
  
    withCredentials([
