@@ -40,7 +40,7 @@ def npmRun(runTarget, targetEnv) {
 def runfunction() {
       writeFile file: '/tmp/functions.sh', text: libraryResource('functions')
 	  //def func = "chmod +x /tmp/functions.sh"
-	  sh(returnStdout: true, script: func)
+	  //sh(returnStdout: true, script: func)
 	  def sh = sh """/tmp/functions.sh"""
 	  return sh
     }
