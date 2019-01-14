@@ -16,5 +16,5 @@ public def VariablesName() {
         ENV.CPP='/apps/tools/devtoolset-1.1/root/usr/bin/cpp'
         ENV.CXX='/apps/tools/devtoolset-1.1/root/usr/bin/c++'
         ENV.NODEJS_ORG_MIRROR='http://nexus.sandbox.extranet.group/nexus/content/sites/binaries/node'
-        println CPP = '${ENV.CPP}'
+        println "CPP = ${ENV.CPP}"
  }
