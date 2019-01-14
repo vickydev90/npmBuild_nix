@@ -1,12 +1,8 @@
 package com.jenkins.library
 // import com.jenkins.library.push.pushNexus
 import groovy.json.JsonSlurper
-import com.jenkins.library.envVar.VariablesName
 
-public static void main(String[] args) {
-      VariablesName();
-   }
-println $HTTP_PROXY
+
 
 /* def npm(runTarget) {
 	try{
