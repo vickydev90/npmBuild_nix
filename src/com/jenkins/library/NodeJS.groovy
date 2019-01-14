@@ -1,10 +1,11 @@
 package com.jenkins.library
 // import com.jenkins.library.push.pushNexus
 import groovy.json.JsonSlurper
+import com.jenkins.library.envVar
 
+println $HTTP_PROXY
 
-
-def npm(runTarget) {
+/* def npm(runTarget) {
 	try{
 		runfunction()
 		sh """#!/bin/bash -e
@@ -99,4 +100,4 @@ def publishNexus(targetEnv) {
 		// step([$class: 'WsCleanup', notFailBuild: true])
   		}
   	}
-  }
+  } */
