@@ -1,4 +1,4 @@
-package com.jenkins.library.envVar
+package com.jenkins.library
 
 class VARIABLES {
    public static def VariablesName() {
