@@ -1,4 +1,4 @@
-import com.jenkins.library.Lib
+/*import com.jenkins.library.Lib
 
 String call() {
     script {
@@ -10,4 +10,12 @@ String call() {
             sh 'echo returnFalse returned false'
         }
     }
+}*/
+
+
+import com.jenkins.library.envVar
+
+def call() {
+	def s = new envVar();
+	s.VariablesName()
 }
