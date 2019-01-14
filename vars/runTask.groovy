@@ -16,6 +16,6 @@ String call() {
 import com.jenkins.library.envVar
 
 def call() {
-	def s = new envVar();
+	envVar s = new envVar();
 	s.VariablesName()
 }
