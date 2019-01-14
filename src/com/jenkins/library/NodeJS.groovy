@@ -1,12 +1,18 @@
 package com.jenkins.library
 // import com.jenkins.library.push.pushNexus
 import groovy.json.JsonSlurper
+import com.jenkins.library.envVar
+
+def env() {
+    def variables = new envVar()
+    variables.VariablesName()
+}
 
 
 
-/* def npm(runTarget) {
+def npm(runTarget) {
 	try{
-		runfunction()
+		env()
 		sh """#!/bin/bash -e
 		npm ${runTarget}"""
 	} catch (Exception ex) {
@@ -99,4 +105,4 @@ def publishNexus(targetEnv) {
 		// step([$class: 'WsCleanup', notFailBuild: true])
   		}
   	}
-  } */
+  }
