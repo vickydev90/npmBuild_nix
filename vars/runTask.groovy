@@ -18,4 +18,5 @@ import com.jenkins.library.envVar
 def call() {
 	def s = new envVar();
 	s.VariablesName()
+	println "http proxy: ${ENV.HTTP_PROXY}"
 }
