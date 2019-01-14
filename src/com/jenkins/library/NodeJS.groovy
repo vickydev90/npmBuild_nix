@@ -3,6 +3,9 @@ package com.jenkins.library
 import groovy.json.JsonSlurper
 import com.jenkins.library.envVar
 
+public static void main(String[] args) {
+      VariablesName();
+   }
 println $HTTP_PROXY
 
 /* def npm(runTarget) {
